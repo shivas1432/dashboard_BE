@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-// ✅ Use a MySQL connection pool instead of a single connection
+// Use a MySQL connection pool instead of a single connection
 const db = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -17,7 +17,7 @@ const db = mysql.createPool({
     queueLimit: 0
 });
 
-// ✅ Check database connection on startup
+// Check database connection on startup
 db.getConnection((err, connection) => {
     if (err) {
         console.error("❌ Database Connection Failed!", err);
@@ -27,7 +27,7 @@ db.getConnection((err, connection) => {
     connection.release(); // Release connection back to the pool
 });
 
-// ✅ Fetch Resume Users from Database
+//  Fetch Resume Users from Database
 app.get('/resumeusers', (req, res) => {
     db.query("SELECT id, name, email FROM resumeusers", (err, results) => {
         if (err) {
@@ -38,7 +38,7 @@ app.get('/resumeusers', (req, res) => {
     });
 });
 
-// ✅ Fetch All Guests (No Limit)
+// Fetch All Guests (No Limit)
 app.get('/guests', (req, res) => {
     db.query("SELECT id, name FROM guests", (err, results) => {
         if (err) {
@@ -49,7 +49,7 @@ app.get('/guests', (req, res) => {
     });
 });
 
-// ✅ Start Server
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
